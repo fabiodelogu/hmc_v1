@@ -1,0 +1,85 @@
+[]
+#Type of model (1=Windows, 10=Linux)
+SO=1
+#Computing deep Flow (1=yes, 0=no)
+DeepFlow=1
+#Restart a run (1=yes, 0=no)
+RR=0
+#Meteo data grouping (1=one dir; 2=year,aaaa ; 3=year-month, aaaamm)
+MeteoGroup=1
+#Number of sections
+iSectionNumber=2
+#Lower Left DEM angle coordinate
+GeoDEM=44.40484367 8.48878791
+#Lower Left Meteo Data angle coordinate
+GeoMETEO=44.40484367 8.4887879
+#DEM Lat and Lon cellsizes
+passDem=0.00111111 0.00111111
+#Meteo Data Lat and Lon cellsizes
+passMeteo=0.00111111 0.00111111
+#Meteodata num rows and cols file (only if Dem and Meteo grids are different)
+DimMeteo=447 401
+#Lat and Lon cellsizes in meters
+DimDemMeters=-999 -999
+#Rainfall Duration (hours)
+Duration=48
+#Temporal dStep of Rainfall Matrix (minutes)																				
+iStepDelta=60   																									
+#Number of Integral Steps Between Two Rainfall Matrix (dx)
+intStep=1
+#Temporal dStep of Continuum integration (seconds)	
+ConvInt=30																										
+#Meteo Data Rescaling factor (permitted: 10 or 100 or 1000)
+iScaleFactor=10 																										
+# Interpolation flag - if Flag is equal 1  reads Meto Data Series and performs IDW interpolation, else put it equal 0
+IntFlag=0				
+#N° of Rain gauges 																								
+Nraing=14 										
+#N° of Thermometers																	
+Ntmpng=11  							
+#N° of Radiometers																				
+Nradmg=3  																				
+#N° of Anemometers							
+Nwindg=3  							
+#N° of Hygrometers																				
+Nhygrm=5 								
+#Run starting data																			
+sDateStart=200608160000
+#Run initial conditions																			
+sDateStatus=200608160000	
+#Rainfall Data/Map Path																				  
+sPathDataTimeRain=C:\hyperdrift\hypercdrift\MeteoData\Orba\Rain\
+#Temperature Data/Map Path
+sPathDataTimeTemp=C:\hyperdrift\hypercdrift\MeteoData\Orba\Temperature\
+#Radiation Data/Map Path	
+sPathDataTimeRadi=C:\hyperdrift\hypercdrift\MeteoData\Orba\Radiation\
+#Wind Data/Map Path			
+sPathDataTimeWind=C:\hyperdrift\hypercdrift\MeteoData\Orba\Wind\
+#Relatvie Umidity Data/Map Path
+sPathDataTimeRelu=C:\hyperdrift\hypercdrift\MeteoData\Orba\Umidity\
+#Land Data Path
+sPathDataStaticLandData=C:\hyperdrift\hypercdrift\LandData\
+#Path 2D output
+sOut2D=C:\hyperdrift\hypercdrift\MeteoData\Orba\mappe\
+#Quasi static Data/Map Path (LAI)
+sQuasiStatic=C:\hyperdrift\hypercdrift\MeteoData\Orba\Lai\
+#File info dighe
+sInfoDams=C:\hyperdrift\hypercdrift\LandData\orbaDamLakeInfoDighe.txt
+#File info outlet-release
+sInfoOutlet=C:\hyperdrift\hypercdrift\LandData\orbaDamLakeInfoPrese.txt
+#Path hydraulic plants series 
+sPlantsSeries=C:\hyperdrift\hypercdrift\LandData\turbinati\
+#File info Lakes
+sInfoLakes=C:\hyperdrift\hypercdrift\LandData\orbaDamLakeInfoLaghi.txt
+#File info join tributaries
+sInfoJoin=C:\hyperdrift\hypercdrift\LandData\orbaDamLakeInfoJoin.txt
+#Snow info file
+sInfoSnow=C:\hyperdrift\hypercdrift\LandData\orbaInfoSnow.txt
+#State save modality (0 0 0: all hours all days; 1 0 h: once a day at hour h; 2 d h: once a month day d hour h; -1 -1 -1 never)
+dFlagS=-1 16 1
+#Output save modality (0 0 0: all hours all days; 1 0 h: once a day at hour h; 2 d h: once a month day d hour h; -1 -1 -1 never)
+dFlagO=-1 0 3
+#Frequency of Meteo data maps in minutes (60,180...)
+iStepFrequency=60
+#Number of minutes waiting for Meteo data
+dMinWait=180

@@ -1,0 +1,82 @@
+
+2009/09/11 ore 16.45 - Simone
+Rilascio versione di H-CDRiFt ottenuta a partire dal codice consegnatomi da Delogu.
+Il codice può:
+		1) utilizzare serie di dati da sensori meteo (Precipitazione, Temperatura, Umidità relativa, Vento, Radiazione onde corte) 
+			 e interpolare con IDW
+		2) leggere mappe di dati meteo (Precipitazione, Temperatura, Umidità relativa, Vento, Radiazione onde corte)
+		   scritte in formato ASCII di ESRI, una per ogni step temporale. 
+		   Il nome delle mappe è "Rain_AAAAMMGGHHMM.txt" ReadMeteoMap.f90
+		3) la scelta tra opzione 1 e 2 viene fatta modificando il valore del FLAG nel file "bacino.info.txt"
+		4) è necessario specificare i percorsi in cui si trovano i file di input (sia mappe che serie) nel file "bacino.info.txt"
+Il codice si compila senza errori e inizia le simulazioni ma non ho mai concluso una simulazione e verificato i risultati.
+
+
+2009/10/07 - Francesco
+Le variabili ct->dCt e cf->dCf rinominate ed inserite nel common. Cambiate tutte le subrotuine che le usano.
+
+Modificata sobroutine ReadLandData.f90 flag di switch per Hyperdrift, 
+Modificata ReadInfoData.f90, legge il dem perchè in Hcdrift non c'è ctime, flag di utilizzo deepflow, step integrazione Hcdrift, flag per ripresa
+run interrotto
+create le subrotuine convolutionHyperCdrift.f90 e SurfaceRouting.f90 peculiari di Hcdrift
+create le subroutine SubFlowHcdrift.f90 e HortonMatrixHcdrift.f90, con variazioni rispetto alle originali per il funzionamento di Hcdrift
+
+creata la subroutine WriteStateMatrix.f90 che scrive le matrici di V,Hidrom,Ritenzione,Routing sup. ad ogni istante di integrazione
+della portata.
+
+creata la subroutine ReadStateMatrix.f90 per riprendere un run interrotto
+creata la subroutine ReadHydrograph.f90 per riprendere un run interrotto
+creata la subroutine ReadSections.f90 per leggere le coordinate righe colonna delle sezioni di chiusura dal file nomebacino.sections.txt nella cartella
+LandData
+
+I parametri dCappaC, dCappaV, dCt, dCf, NomeBacino  devono essere dati come argomenti da riga di comando. Se si utilizza il Cdrift classico
+inserire valori qualsiasi per dCappaC, dCappaV, non verrano usati
+
+Le variabili a2dQT, a2dQSotT sono state portate da 3 a 2 dimensioni.
+
+La variabile iNumBasins viene letta dal file .info,txt e corrisponde al numero di sezioni monitorate in Hyper drift
+
+
+12/10/2009 - Francesco
+Introduzzione Costante di svuotamento superficiale canale Cc variabile. Per ora in maniera lineare funzione di H(t).
+E' stato inserito un controllo di cC massimo: cCmax=3600/dth*0.7 dove:
+-dth è il dt di integrazione del blocco Hyper (es. 30 sec)
+-0.7 numero arbitrario < 1.
+Se la cC>cCmax si ha instabilità numerica (ricorda che Q=H(t)*cC)
+
+11/11/2009
+Inserita la possibilità di integrare su diversi step temporali versanti e canali.
+Scritte apposite subroutines SubFlowHcdrift2Speed.f90 e HortonMatrixHcdrift2Speed.f90 convolutionHyperCdrift2Speed.f90 e SurfaceRouting2Speed.f90
+
+Raccolte nella subrotuine read_f_k.f90 tutte le matrici relative alle costanti di horton (c1, f2, f1) in modo da calcolarle una volta sola.
+
+
+
+21/01/2015
+-Introdotte ini function per fare la ricerca dei parametri iniziali per chiave
+ ini.f90 ReadInfoDataDamIni.f90
+
+-Introdotta la possibilità di avere mappe variabili dei parametri uh,uc,ct,cf.
+ Modificate varie funzioni. i parametri da scalari diventano matriciali
+
+-Introdotto la funzione che regola la reinfiltrazione in funzione della risoluzione spaziale
+CoeffResolutionMap.f90,SurfaceRoutingDamLaghi.f90HortonMatrixHcdrift.f90
+-Introdotto il chec numerico su uh 
+SurfaceRoutingDamLaghi.f90
+
+-Introdotto check sulla piogia totale (Rain+SM) nelle subroutine della neve
+SRaM.f90
+
+-Corretto baco su surface routing, non tutte le equazioni usavano a2dCappaCact
+SurfaceRoutingDamLaghi.f90
+
+-Inseriti controlli su rilasci dalle dighe
+SurfaceRoutingDamLaghi.f90
+
+22/01/2015
+-Levate un po' di matrici inutili
+
+05/03/2015
+-Modificata la regola di svuotamento delle dighe se non ho turbinate. Inseritva la potenza 6 di VD/VDmax
+la regola lineare potrebbe svuotare molto velocemente le dighe
+SurfaceRoutingDamLaghi.f90
